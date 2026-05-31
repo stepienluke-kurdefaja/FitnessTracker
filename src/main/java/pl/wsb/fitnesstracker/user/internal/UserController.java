@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.fitnesstracker.user.api.User;
 import pl.wsb.fitnesstracker.user.api.UserDto;
-import pl.wsb.fitnesstracker.user.api.UserEmailDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -42,9 +41,9 @@ class UserController {
     }
 
     @GetMapping("/email")
-    public List<UserEmailDto> getUserByEmail(@RequestParam String email) {
+    public List<UserDto> getUserByEmail(@RequestParam String email) {
         return userService.findUsersByEmailFragment(email).stream()
-                .map(user -> new UserEmailDto(user.getId(), user.getEmail()))
+                .map(userMapper::toDto)
                 .toList();
     }
 
